@@ -2,7 +2,7 @@
 // @name         Solving maths is fun
 // @description  Solves fun math
 // @author       Ko
-// @version      1
+// @version      1.1
 // @include      *.koalabeast.com:*
 // @include      *.jukejuice.com:*
 // @include      *.newcompte.fr:*
@@ -25,10 +25,12 @@ tagpro.ready(function() {
             if (pu.name != names[pu.id]) {
                 names[pu.id] = pu.name;
 
-                if (pu.name.match(/^[ \d×÷=/*+-]+$/)) {
+                if (pu.name && isNaN(pu.name) && pu.name.match(/^[ \d×÷=/*+-]+$/)) {
                     try {
                         var answer = eval(pu.name.replace('×','*').replace('÷','/').replace('=',''));
-                        tagpro.socket.emit('chat', {message:String(answer)});
+                        setTimeout(tagpro.socket.emit,
+                                   500 + Math.random()*1000,
+                                   'chat', {message:String(answer)});
                     } catch(e){}
                 }
             }
